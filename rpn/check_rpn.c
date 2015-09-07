@@ -40,6 +40,11 @@ void test_operator()
 
 int main(void)
 {
-	test_operator();
-	test_calc();
+	// test_operator();
+	// test_calc();
+	ch = getchar();
+	while(digit(ch))
+	{
+		stack[pointer] = ch - '0' + stack[pointer];
+	}
 }
