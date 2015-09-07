@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 void calc(int stack[], int pointer, int op)
 {
   	switch(op){
@@ -40,24 +39,29 @@ int skip_blank(ch)
 	return ch;
 }
 
+
+int skip_next_line(int ch)
+{
+	if(ch == '\n'){
+		return getchar();
+	}
+	return ch;
+}
+
 int error(ch){
 	printf("error at %c\n", ch);
 	while (ch != EOF && ch != '\n')
 	{
 		ch = getchar();
 	}
+	ch = skip_next_line(ch);
 	return ch;
 }
 
 int calc_line(int stack[], int pointer, int ch)
 {
-	while(ch != '\n')
+	while(ch != '\n' && ch != EOF)
 	{
-		if(ch == EOF){
-			printf("%d\n", stack[0]);
-			return EOF;
-		}
-
 		if (operator(ch))
 		{
 			// enough_digits(stack);
@@ -79,8 +83,18 @@ int calc_line(int stack[], int pointer, int ch)
 		}
 		ch = skip_blank();
 	}
+	ch = skip_next_line(ch);
 	printf("%d\n", stack[0]);
-	return getchar();
+	return ch;
+}
+
+int clean_stack(int stack[])
+{
+	int i=0;
+	for(i < N; i++;)
+	{
+		stack[i] = 0;
+	}
 }
 
 int main(void)
@@ -88,8 +102,10 @@ int main(void)
 	int stack[N];
 	int ch, pointer = 0;
 	ch = getchar();
+	// printf("%d\n", ch != EOF);
 	while (ch != EOF)
 	{
+		clean_stack(stack);
 		ch = calc_line(stack, pointer, ch);
 	}
 	return 0;
