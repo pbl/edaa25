@@ -1,7 +1,6 @@
 #define N		(10)
+#define NO_MEMORY		(-2)
 #include <stdio.h>
-#include <stdlib.h>
-
 
 void calc(int stack[], int pointer, int op)
 {
@@ -32,7 +31,6 @@ int digit(ch)
 
 int skip_blank(ch)
 {
-	ch = getchar();
 	while (ch == ' ')
 	{
 		ch = getchar();
@@ -49,8 +47,21 @@ int error(ch){
 	return ch;
 }
 
+int next_char(int memory)
+{
+	if(memory == NO_MEMORY)
+	{
+		return getchar();
+	}
+	int ch = memory;
+	memory = NO_MEMORY;
+	return ch;
+}
+
+
 int calc_line(int stack[], int pointer, int ch)
 {
+	int memory = NO_MEMORY;
 	while(ch != '\n')
 	{
 		if(ch == EOF){
@@ -71,13 +82,21 @@ int calc_line(int stack[], int pointer, int ch)
 				return error(ch);
 			}
 			stack[pointer] = ch - '0';
+			ch = getchar();
+			while(digit(ch))
+			{
+				stack[pointer] = ch - '0' + stack[pointer];
+			}
+			memory = ch;
+			// while()
 			++pointer;
 		}
 		else //unknown character
 		{
 			return error(ch);
 		}
-		ch = skip_blank();
+		ch = next_char(memory);
+		ch = skip_blank(ch);
 	}
 	printf("%d\n", stack[0]);
 	return getchar();
