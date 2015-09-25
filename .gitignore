@@ -32,4 +32,4 @@
 *.dSYM/
 
 # generated file
-poly/output
+output
