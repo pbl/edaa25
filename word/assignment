@@ -1,0 +1,3 @@
+Write a program which finds the longest word in its input (stdin). Here we define
+a word to be a sequence of characters for which isalpha returns a nonzero value. See
+word.zip at the book’s site
